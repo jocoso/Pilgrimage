@@ -10,7 +10,7 @@ using namespace std;
 namespace constants 
 {
 	const std::chrono::seconds nd_pause(2); // Pause between dialogue lines. 
-	const char separator = ':'; 
+	const string separator = ">:"; 
 	const string tought_prompt = "Write a though";
 	const string tab = "====================\n";
 }
@@ -125,7 +125,7 @@ void looped_instruct(string message, string raw_pattern, string on_fail_msg)
 	// keep repeating the prompt.
 	do
 	{
-		cout << message << constants::separator << ' ';
+		cout << message << ' ' << constants::separator;
 		cout.flush();
 		
 		string user_input;
@@ -142,13 +142,13 @@ void looped_instruct(string message, string raw_pattern, string on_fail_msg)
 
 void say(const string& message, const int time)
 {
-	cout << message << endl;
-	wait();
+	cout << "\n" << message <<  "\n" << endl;
+	wait(time);
 }
 
 void say(const string& message)
 {
-	cout << message << endl;
+	cout << "\n" << message <<  "\n" << endl;
 	wait();
 }
 
