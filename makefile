@@ -1,5 +1,5 @@
-pilgrimage: sample/sample.cc
-	g++ sample/sample.cc -o pilgrimage
+pilgrimage: game/pilgrimage.cc
+	g++ game/pilgrimage.cc -o pilgrimage
 exec: pilgrimage
 	./pilgrimage
 	rm pilgrimage
