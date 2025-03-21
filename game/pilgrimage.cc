@@ -1,8 +1,10 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <map>
 
 #include "../src/system.cpp"
+#include "../src/component.cpp"
 
 template<typename T, typename... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {
@@ -74,41 +76,49 @@ protected:
 private:
 };
 
-class Component {
-public:
-	virtual ~Component() = default; // Virtual destructor for polymorphic behaviour
-protected:
-private:
-};
-
 class IOComponent : public Component {
 public:
+	void activate() override {
+		std::cout << "IO_COMPONENT:UNSTARTED." << std::endl;
+	}
 protected:
 private:
 };
 
 class RandomizerComponent : public Component {
 public:
+	void activate() override {
+		std::cout << "RANDOMIZER_COMPONENT:UNSTARTED." << std::endl;
+	}
 protected:
 private:
 };
 
 class Brain {
 public:
-    Brain(std::vector<std::unique_ptr<System>>&& systems, std::vector<std::unique_ptr<Component>>&& components) : _systems(std::move(systems)), _components(std::move(components)) {
+    Brain(std::vector<std::unique_ptr<System>>&& systems, std::map<std::string, std::unique_ptr<Component>>&& components) : _systems(std::move(systems)), _components(std::move(components)) {
         
     }
     
-    void wake() {
+    void wakeSystems() {
     	// For each System object in _system...
     	for (const auto& system : _systems) {
     		system->run();
     	}
     }
+    
+    void activateComponent(const std::string& componentName) {
+    	auto it = _components.find(componentName);
+    	if (it != _components.end()) {
+    		it->second->activate();
+    	} else {
+    		std::cout << "Component '" << componentName << "' not found." << std::endl;
+    	}
+    }
 protected:
 private:
     std::vector<std::unique_ptr<System>> _systems;
-    std::vector<std::unique_ptr<Component>> _components;
+    std::map<std::string, std::unique_ptr<Component>> _components;
 };
 
 int main() 
@@ -122,12 +132,14 @@ int main()
     systems.push_back(make_unique<CraftingSystem>());
     systems.push_back(make_unique<GovernmentSystem>());
     
-    std::vector<std::unique_ptr<Component>> components;
-    components.push_back(make_unique<IOComponent>());
-    components.push_back(make_unique<RandomizerComponent>());
+    std::map<std::string, std::unique_ptr<Component>> components;
+    components["io"] = make_unique<IOComponent>();
+    components["randomizer"] = make_unique<RandomizerComponent>();
 
     Brain brain(std::move(systems), std::move(components));
-    brain.wake();
+    brain.wakeSystems();
+    brain.activateComponent("io");
+    brain.activateComponent("randomizer");
     
     return 0;
 }

@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -I include
-SRCS = game/pilgrimage.cc src/system.cc
+SRCS = game/pilgrimage.cc src/system.cc src/component.cc
 OBJS = $(SRCS:.cc=.o)
 TARGET = pilgrimage
 
@@ -20,4 +20,4 @@ clean:
 	
 exec: $(TARGET)
 	./$(TARGET)
-	rm $(TARGET)
+	make clean
