@@ -1,8 +1,9 @@
+
 #ifndef IO_COMPONENT_H
 #define IO_COMPONENT_H
 
 #include <iostream>
-#include "component.h"
+#include "./component.h"
 
 class IOComponent : public Component {
 public:
