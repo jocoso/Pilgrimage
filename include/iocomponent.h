@@ -3,6 +3,8 @@
 #define IO_COMPONENT_H
 
 #include <iostream>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 #include "./component.h"
 
 class IOComponent : public Component {
