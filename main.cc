@@ -53,7 +53,7 @@ private:
 class WeaponSystem : public System {
 public:
 	void run() override {
-		std::cout << "MAGIC_SYSTEM:UNSTARTED." << std::endl;
+		std::cout << "WEAPON_SYSTEM:UNSTARTED." << std::endl;
 	}
 protected:
 private:
