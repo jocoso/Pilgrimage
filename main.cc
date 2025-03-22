@@ -6,6 +6,7 @@
 #include "../include/system.h"
 #include "../include/component.h"
 #include "../include/iocomponent.h"
+#include "../include/ccsystem.h"
 
 template<typename T, typename... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {
@@ -134,6 +135,7 @@ int main()
     systems.push_back(make_unique<EconomicSystem>());
     systems.push_back(make_unique<CraftingSystem>());
     systems.push_back(make_unique<GovernmentSystem>());
+    //systems.push_back(make_unique<CharacterCreationSystem>());
     
     std::map<std::string, std::unique_ptr<Component>> components;
     components["io"] = make_unique<IOComponent>();

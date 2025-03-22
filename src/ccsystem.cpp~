@@ -1,0 +1,8 @@
+#include "../include/ccsystem.h"
+#include <iostream>
+
+void CharacterCreationSystem::run() {
+	std::cout << "CHARACTER-CREATION_SYSTEM:UNSTARTED." << std::endl;
+}
+
+
