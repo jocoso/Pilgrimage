@@ -4,6 +4,7 @@
 class System
 {
 public:
+	virtual ~System() = default; // Virtual destructor
 	virtual void run() = 0; 
 protected:
 private:
