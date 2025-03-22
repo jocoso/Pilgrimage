@@ -5,6 +5,7 @@
 
 #include "../src/system.cpp"
 #include "../src/component.cpp"
+#include "../src/iocomponent.cpp"
 
 template<typename T, typename... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {
@@ -40,14 +41,24 @@ protected:
 private:
 };
 
-class FlyingSystem : public System {
+class MagicSystem : public System {
 public:
 	void run() override {
-		std::cout << "FLYING_SYSTEM:UNSTARTED." << std::endl;
+		std::cout << "MAGIC_SYSTEM:UNSTARTED." << std::endl;
 	}
 protected:
 private:
 };
+
+class WeaponSystem : public System {
+public:
+	void run() override {
+		std::cout << "MAGIC_SYSTEM:UNSTARTED." << std::endl;
+	}
+protected:
+private:
+};
+
 
 class EconomicSystem : public System {
 public:
@@ -71,15 +82,6 @@ class GovernmentSystem : public System {
 public:
 	void run() override {
 		std::cout << "GOVERNMENT_SYSTEM:UNSTARTED." << std::endl;
-	}
-protected:
-private:
-};
-
-class IOComponent : public Component {
-public:
-	void activate() override {
-		std::cout << "IO_COMPONENT:UNSTARTED." << std::endl;
 	}
 protected:
 private:
@@ -127,7 +129,8 @@ int main()
     systems.push_back(make_unique<DialogueSystem>());
     systems.push_back(make_unique<FightingSystem>());
     systems.push_back(make_unique<InventorySystem>());
-    systems.push_back(make_unique<FlyingSystem>());
+    systems.push_back(make_unique<MagicSystem>());
+    systems.push_back(make_unique<WeaponSystem>());
     systems.push_back(make_unique<EconomicSystem>());
     systems.push_back(make_unique<CraftingSystem>());
     systems.push_back(make_unique<GovernmentSystem>());

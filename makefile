@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -I include
-SRCS = game/pilgrimage.cc src/system.cc src/component.cc
+SRCS = game/pilgrimage.cc src/system.cpp src/component.cpp src/iocomponent.cpp
 OBJS = $(SRCS:.cc=.o)
 TARGET = pilgrimage
 
