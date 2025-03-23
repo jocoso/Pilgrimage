@@ -99,15 +99,22 @@ private:
 
 class Brain {
 public:
-    Brain(std::vector<std::unique_ptr<System>>&& systems, std::map<std::string, std::unique_ptr<Component>>&& components) : _systems(std::move(systems)), _components(std::move(components)) {
+    Brain(std::vector<std::unique_ptr<System>>&& systems, std::map<std::string, std::shared_ptr<Component>>&& components) : _systems(std::move(systems)), _components(std::move(components)) {
         
     }
     
     void wakeSystems() {
-    	// For each System object in _system...
-    	for (const auto& system : _systems) {
-    		system->run();
-    	}
+    	// Component IO is required
+    	if (_components.find("io") != _components.end()) {
+    		// Use dynamic_pointer_cast to safely cast to shared_ptr<IOComponent>
+    	
+            	for (const auto& system : _systems) {
+            		system->assign_component("io", _components["io"]);
+                	system->run();
+            	}
+        } else {
+            std::cout << "IO component not found." << std::endl;
+        }
     }
     
     void activateComponent(const std::string& componentName) {
@@ -121,30 +128,27 @@ public:
 protected:
 private:
     std::vector<std::unique_ptr<System>> _systems;
-    std::map<std::string, std::unique_ptr<Component>> _components;
+    std::map<std::string, std::shared_ptr<Component>> _components;
 };
 
 int main() 
 {
     std::vector<std::unique_ptr<System>> systems;
-    systems.push_back(make_unique<DialogueSystem>());
-    systems.push_back(make_unique<FightingSystem>());
-    systems.push_back(make_unique<InventorySystem>());
-    systems.push_back(make_unique<MagicSystem>());
-    systems.push_back(make_unique<WeaponSystem>());
-    systems.push_back(make_unique<EconomicSystem>());
-    systems.push_back(make_unique<CraftingSystem>());
-    systems.push_back(make_unique<GovernmentSystem>());
-    //systems.push_back(make_unique<CharacterCreationSystem>());
+    //systems.push_back(make_unique<DialogueSystem>());
+    //systems.push_back(make_unique<FightingSystem>());
+    //systems.push_back(make_unique<InventorySystem>());
+    //systems.push_back(make_unique<MagicSystem>());
+    //systems.push_back(make_unique<WeaponSystem>());
+    //systems.push_back(make_unique<EconomicSystem>());
+    //systems.push_back(make_unique<CraftingSystem>());
+    //systems.push_back(make_unique<GovernmentSystem>());
+    systems.push_back(make_unique<CharacterCreationSystem>());
     
-    std::map<std::string, std::unique_ptr<Component>> components;
-    components["io"] = make_unique<IOComponent>();
-    components["randomizer"] = make_unique<RandomizerComponent>();
+    std::map<std::string, std::shared_ptr<Component>> components;
+    components["io"] = std::make_shared<IOComponent>(800, 600, "Pilgrimage");
 
     Brain brain(std::move(systems), std::move(components));
     brain.wakeSystems();
-    brain.activateComponent("io");
-    brain.activateComponent("randomizer");
     
     return 0;
 }

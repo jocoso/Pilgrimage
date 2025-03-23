@@ -12,12 +12,14 @@ set(SRC_FILES
 	src/system.cpp
 	src/component.cpp
 	src/iocomponent.cpp
+	src/ccsystem.cpp
 )
 
 # Add libraries if needed
 add_library(system src/system.cpp)
 add_library(component src/component.cpp)
 add_library(iocomponent src/iocomponent.cpp)
+add_library(ccsystem src/ccsystem.cpp)
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SRC_FILES})

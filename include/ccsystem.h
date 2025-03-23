@@ -3,14 +3,14 @@
 
 #include <iostream>
 #include "iocomponent.h"
+#include "system.h"
 
 class CharacterCreationSystem : public System {
 public:
-	void run() override;
-	
+	virtual ~CharacterCreationSystem();
+	void run() override; 
 protected:
 private:
-	IOComponent _window;
 };
 
 #endif // CC_SYSTEM_H
