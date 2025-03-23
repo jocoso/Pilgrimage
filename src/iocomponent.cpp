@@ -1,5 +1,14 @@
 #include "../include/iocomponent.h"
 
+IOComponent::IOComponent(unsigned int width, unsigned int height, const std::string& title) :
+_size(std::make_unique<sf::VideoMode>(width, height)),
+_title(title){}
+
+IOComponent::IOComponent(const IOComponent& other) :
+	_size(std::make_unique<sf::VideoMode>(*other._size)),
+	_title(other._title) 
+{}
+
 void IOComponent::activate() {
 
 	// Main Window
@@ -34,5 +43,5 @@ void IOComponent::activate() {
 		window.display();
 	}
 	
-	std::cout << "IO_COMPONENT:10%" << std::endl;
+	std::cout << "IO_COMPONENT:15%" << std::endl;
 }
