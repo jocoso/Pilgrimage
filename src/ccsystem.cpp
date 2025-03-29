@@ -3,7 +3,6 @@
 CharacterCreationSystem::~CharacterCreationSystem() {}
 
 void CharacterCreationSystem::run() {
-	std::cout << "CHARACTER-CREATION_SYSTEM: 10%" << std::endl;
-	_components["io"]->activate();
+	_components["io"]->use_function("write", "Hello World!");
 }
 
