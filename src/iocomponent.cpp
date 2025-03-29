@@ -1,18 +1,36 @@
 #include "../include/iocomponent.h"
 
-IOComponent::IOComponent(unsigned int width, unsigned int height, const std::string& title) :
+IOComponent::IOComponent(unsigned int width, unsigned int height, const int max_logs_displayed, const std::string& title); :
 _size(std::make_unique<sf::VideoMode>(width, height)),
-_title(title){}
+_title(title),
+_MAX_LOGS_DISPLAYED(max_logs_displayed)
+{}
 
 IOComponent::IOComponent(const IOComponent& other) :
 	_size(std::make_unique<sf::VideoMode>(*other._size)),
-	_title(other._title) 
+	_title(other._title), 
+	_MAX_LOGS_DISPLAYED(other._MAX_LOGS_DISPLAYED),
+	_log(other._log)
 {}
+
+void IOComponent::write(const std::string input) {
+	if(input != nullptr && input.empty()) 
+	{
+		if(_log.size > _MAX_LOGS_DISPLAYED)
+			_log.pop_back();
+
+		_log.push_front(input);
+	}
+}
+
+const std::deque<std::string>& IOComponent::get_log() const {
+	return _log;
+}
 
 void IOComponent::activate() {
 
 	// Main Window
-	sf::RenderWindow window(sf::VideoMode({800, 600}), "Pilgrimage");
+	sf::RenderWindow window(sf::VideoMode(*_size, _title));
 	// Create a graphical text to display
 	sf::Font font;
 	if (!font.loadFromFile("../resources/fonts/arial.ttf")) {
@@ -20,7 +38,7 @@ void IOComponent::activate() {
 		return;
 	}
 
-	sf::Text text("Pilgrimage", font, 50);
+	sf::Text text(_title, font, 50);
 	
 	while (window.isOpen())
 	{
@@ -42,6 +60,4 @@ void IOComponent::activate() {
 		// Update the window
 		window.display();
 	}
-	
-	std::cout << "IO_COMPONENT:15%" << std::endl;
 }
