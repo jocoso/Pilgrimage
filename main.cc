@@ -145,7 +145,7 @@ int main()
     systems.push_back(make_unique<CharacterCreationSystem>());
     
     std::map<std::string, std::shared_ptr<Component>> components;
-    components["io"] = std::make_shared<IOComponent>(800, 600, "Pilgrimage");
+    components["io"] = std::make_shared<IOComponent>(800, 600, 3, "Pilgrimage");
 
     Brain brain(std::move(systems), std::move(components));
     brain.wakeSystems();
